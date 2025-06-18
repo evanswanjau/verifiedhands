@@ -16,19 +16,26 @@ import {
   Users,
   ArrowRight,
   Sparkles,
+  MapPin,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BookingModal from "@/components/BookingModal";
 import services from "@/data/services.json";
-import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
+  const [selectedService, setSelectedService] = useState<string | undefined>(
+    undefined
+  );
 
   const handleBook = (service: string) => {
     setSelectedService(service);
@@ -149,7 +156,7 @@ const HomePage = () => {
         services={services}
         onBook={handleBook}
       />
-      <section className="py-28 bg-white">
+      <section id="about" className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Left column - Image */}
@@ -377,7 +384,7 @@ const HomePage = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-28 bg-white">
+      <section id="services" className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
@@ -414,6 +421,115 @@ const HomePage = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
+              Get In Touch
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Contact Us
+            </h2>
+            <div className="w-24 h-1.5 bg-green-500 mx-auto mb-6"></div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Contact Form Card */}
+            <Card className="p-8 rounded-2xl bg-white shadow-lg border-none">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Send us a message
+              </h3>
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Your Name</Label>
+                    <Input id="name" placeholder="John Doe" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+254 712 345 678"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" placeholder="How can we help?" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    rows={4}
+                    placeholder="Your message here..."
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
+                  Send Message
+                </Button>
+              </form>
+            </Card>
+
+            {/* Map & Contact Info */}
+            <div className="relative h-full">
+              {/* Map Container */}
+              <div className="h-full min-h-[400px] bg-gray-200 rounded-2xl overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.814516237187!2d36.82115931575381!3d-1.286385835980925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d664f6d4a1%3A0x9f4d1b41c1b1b1b1!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske"
+                  width="100%"
+                  height="100%"
+                  className="absolute inset-0 rounded-2xl"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+
+              {/* Contact Info Card */}
+              <Card className="absolute bottom-6 left-6 right-6 max-w-md p-6 bg-white/95 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Contact Information
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <p className="text-gray-600">
+                      123 Service Street, Nairobi, Kenya
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-green-600" />
+                    <p className="text-gray-600">+254 712 345 678</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-5 h-5 text-green-600" />
+                    <p className="text-gray-600">contact@verifiedhands.com</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-green-600" />
+                    <p className="text-gray-600">Mon-Fri: 8AM - 6PM</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -461,6 +577,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
