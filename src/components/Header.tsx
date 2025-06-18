@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import BookingModal from "./BookingModal";
+import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -9,7 +9,7 @@ const navigation = [
   { name: "Contact", href: "#contact" },
 ];
 
-const Header = () => {
+const Header = ({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -31,9 +31,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-bold text-gray-900">
-              Verified Hands
-            </h1>
+            <h1 className="text-xl font-bold text-gray-900">Verified Hands</h1>
           </div>
 
           <nav className="hidden md:flex space-x-8">
@@ -49,7 +47,12 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:block">
-            <BookingModal />
+            <Button
+              className="bg-green-600 hover:bg-green-700"
+              onClick={() => setIsOpen(true)}
+            >
+              Book a Service
+            </Button>
           </div>
 
           <button
@@ -78,7 +81,12 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
-            <BookingModal />
+            <Button
+              className="bg-green-600 hover:bg-green-700"
+              onClick={() => setIsOpen(true)}
+            >
+              Book a Service
+            </Button>
           </div>
         </div>
       )}

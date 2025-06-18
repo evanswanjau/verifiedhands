@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/select";
 import { Shield, Clock } from "lucide-react";
 
-const BookingModal = () => {
+interface BookingModalProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const BookingModal = ({ isOpen, onOpenChange }: BookingModalProps) => {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-green-600 hover:bg-green-700">
-          Book a Service
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-full h-full rounded-none overflow-y-scroll md:h-auto md:min-w-[65%] md:rounded-2xl p-0 border-none">
         <div className="grid lg:grid-cols-2">
           {/* Form Section */}
@@ -64,14 +64,14 @@ const BookingModal = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Service Type</label>
               <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a service" />
-              </SelectTrigger>
-              <SelectContent className="w-full">
-                <SelectItem value="cleaning">House Cleaning</SelectItem>
-                <SelectItem value="plumbing">Plumbing</SelectItem>
-                <SelectItem value="electrical">Electrical</SelectItem>
-              </SelectContent>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a service" />
+                </SelectTrigger>
+                <SelectContent className="w-full">
+                  <SelectItem value="cleaning">House Cleaning</SelectItem>
+                  <SelectItem value="plumbing">Plumbing</SelectItem>
+                  <SelectItem value="electrical">Electrical</SelectItem>
+                </SelectContent>
               </Select>
             </div>
 

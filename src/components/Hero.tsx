@@ -41,7 +41,7 @@ const Hero = ({ searchQuery, setSearchQuery }: HeroProps) => {
                 />
               </div>
               <Button className="h-10 bg-green-600 hover:bg-green-700 cursor-pointer">
-                Search Services
+                Book Service
               </Button>
             </div>
 
