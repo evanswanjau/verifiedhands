@@ -387,9 +387,9 @@ const HomePage = () => {
       <section id="services" className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
+            <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
               Our Services
-            </span>
+            </Badge>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
               Services We Offer
             </h2>
@@ -426,12 +426,12 @@ const HomePage = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-gray-100">
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
+            <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
               Get In Touch
-            </span>
+            </Badge>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Contact Us
             </h2>
