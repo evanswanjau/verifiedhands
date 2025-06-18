@@ -22,10 +22,28 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BookingModal from "@/components/BookingModal";
+import services from "@/data/services.json";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
+
+  const handleBook = (service: string) => {
+    setSelectedService(service);
+    setIsOpen(true);
+  };
+
+  const navigate = useNavigate();
+
+  const handleModalOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      setSelectedService(undefined);
+      navigate("/", { replace: true });
+    }
+  };
 
   const features = [
     {
@@ -122,91 +140,15 @@ const HomePage = () => {
     },
   ];
 
-  const services = [
-    {
-      title: "Moving & Heavy Lifting",
-      description:
-        "Professional help for moving furniture, appliances, and heavy items safely.",
-      image: "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg",
-    },
-    {
-      title: "Yard Work & Landscaping",
-      description:
-        "Mowing, trimming, weeding, and general yard maintenance services.",
-      image:
-        "https://images.pexels.com/photos/6208086/pexels-photo-6208086.jpeg",
-    },
-    {
-      title: "Demolition & Cleanout",
-      description:
-        "Safe removal of structures, debris, and complete property cleanouts.",
-      image:
-        "https://images.pexels.com/photos/3962285/pexels-photo-3962285.jpeg",
-    },
-    {
-      title: "Painting Assistance",
-      description:
-        "Help with interior/exterior painting prep work and clean up.",
-      image:
-        "https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg",
-    },
-    {
-      title: "Furniture Assembly",
-      description:
-        "Professional assembly of furniture, exercise equipment, and more.",
-      image:
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg",
-    },
-    {
-      title: "Junk Removal",
-      description:
-        "Hauling away unwanted items, debris, and construction waste.",
-      image: "https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg",
-    },
-    {
-      title: "Home Organization",
-      description:
-        "Help decluttering and organizing garages, basements, and storage areas.",
-      image:
-        "https://images.pexels.com/photos/6633927/pexels-photo-6633927.jpeg",
-    },
-    {
-      title: "Pressure Washing",
-      description: "Cleaning driveways, decks, siding, and outdoor surfaces.",
-      image:
-        "https://images.pexels.com/photos/5691693/pexels-photo-5691693.jpeg",
-    },
-    {
-      title: "Event Setup/Takedown",
-      description:
-        "Help setting up and breaking down parties, weddings, and events.",
-      image: "https://images.pexels.com/photos/169523/pexels-photo-169523.jpeg",
-    },
-    {
-      title: "Construction Cleanup",
-      description: "Post-construction cleaning and jobsite organization.",
-      image:
-        "https://images.pexels.com/photos/5854195/pexels-photo-5854195.jpeg",
-    },
-    {
-      title: "Snow Removal",
-      description: "Shoveling, salting, and clearing walkways and driveways.",
-      image:
-        "https://images.pexels.com/photos/5409751/pexels-photo-5409751.jpeg",
-    },
-    {
-      title: "Window Cleaning",
-      description: "Interior and exterior window washing services.",
-      image:
-        "https://images.pexels.com/photos/4393916/pexels-photo-4393916.jpeg",
-    },
-  ];
-
   return (
-    <div>
-      {/* Header */}
+    <>
       <Header setIsOpen={setIsOpen} />
-      <Hero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Hero
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        services={services}
+        onBook={handleBook}
+      />
       <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -649,8 +591,13 @@ const HomePage = () => {
         </div>
       </footer>
 
-      <BookingModal isOpen={isOpen} onOpenChange={setIsOpen} />
-    </div>
+      <BookingModal
+        isOpen={isOpen}
+        onOpenChange={handleModalOpenChange}
+        selectedService={selectedService}
+        services={services}
+      />
+    </>
   );
 };
 

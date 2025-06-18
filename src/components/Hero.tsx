@@ -1,51 +1,163 @@
-import { Search, Shield, Clock, Star } from "lucide-react";
+import { X, Search, Shield, Clock, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface HeroProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  services: { title: string }[];
+  onBook?: (service: string) => void;
 }
 
-const Hero = ({ searchQuery, setSearchQuery }: HeroProps) => {
+const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [inputError, setInputError] = useState(false);
+
+  const filteredSuggestions = services
+    .filter(
+      (service) =>
+        searchQuery &&
+        service.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(0, 5);
+
+  const navigate = useNavigate();
+
+  const handleBookService = () => {
+    if (!searchQuery.trim()) {
+      setInputError(true);
+      return;
+    }
+    setInputError(false);
+    navigate(`/?service=${encodeURIComponent(searchQuery)}`);
+    if (onBook) onBook(searchQuery);
+  };
+
+  const handleClear = () => {
+    setSearchQuery("");
+    setInputError(false);
+    setShowSuggestions(false);
+    navigate("/", { replace: true }); // resets URL to root without query
+  };
+
   return (
     <section className="relative h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden flex items-center">
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      {/* <div className="absolute inset-0 bg-grid-pattern opacity-5"></div> */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <div className="space-y-4">
-              <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold">
-                Trusted skilled professionals
-              </Badge>
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-800 leading-tight">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold">
+                  Trusted skilled professionals
+                </Badge>
+              </motion.div>
+              <motion.h1
+                className="text-4xl lg:text-6xl font-bold text-gray-800 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.7 }}
+              >
                 Find the perfect
                 <span className="text-green-600 block">professional</span>
                 for any job
-              </h1>
-              <p className="text-gray-600 max-w-lg">
+              </motion.h1>
+              <motion.p
+                className="text-gray-600 max-w-lg"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7 }}
+              >
                 Connect with skilled professionals in your area. From home
                 repairs to personal services, we've got you covered.
-              </p>
+              </motion.p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 max-w-md"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+            >
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-[48%] transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
                   placeholder="What service do you need?"
-                  className="pl-10 h-10 border-gray-800 rounded-lg"
+                  className={`pl-10 h-10 border-gray-800 rounded-lg ${
+                    inputError ? "border-red-500 focus:border-red-500" : ""
+                  }`}
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setShowSuggestions(true);
+                    setInputError(false);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() =>
+                    setTimeout(() => setShowSuggestions(false), 100)
+                  }
+                  autoComplete="off"
                 />
+                {searchQuery && (
+                    <button
+                    type="button"
+                    onClick={handleClear}
+                    className="absolute right-3 top-[48%] transform -translate-y-1/2 text-gray-600 hover:text-black font-bold"
+                    tabIndex={-1}
+                    aria-label="Clear search"
+                    >
+                    <X className="w-4 h-4 font-bold" />
+                    </button>
+                )}
+                {inputError && (
+                  <span className="text-red-500 text-xs absolute left-0 top-full mt-1">
+                    Please select a service before booking.
+                  </span>
+                )}
+                {showSuggestions && filteredSuggestions.length > 0 && (
+                  <ul className="absolute z-10 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                    {filteredSuggestions.map((service) => (
+                      <li
+                        key={service.title}
+                        className="px-4 py-2 cursor-pointer hover:bg-green-50"
+                        onMouseDown={() => {
+                          setSearchQuery(service.title);
+                          setShowSuggestions(false);
+                        }}
+                      >
+                        {service.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <Button className="h-10 bg-green-600 hover:bg-green-700 cursor-pointer">
+              <Button
+                className="cursor-pointer h-10 bg-green-600 hover:bg-green-700"
+                onClick={handleBookService}
+              >
                 Book Service
               </Button>
-            </div>
+            </motion.div>
 
-            <div className="flex items-center space-x-8 text-sm text-gray-600">
+            <motion.div
+              className="flex items-center space-x-8 text-sm text-gray-600"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+            >
               <div className="flex items-center space-x-2">
                 <Shield className="w-5 h-5 text-green-500" />
                 <span className="inter-regular">Verified Professionals</span>
@@ -58,10 +170,15 @@ const Hero = ({ searchQuery, setSearchQuery }: HeroProps) => {
                 <Star className="w-5 h-5 text-green-500" />
                 <span className="inter-regular">Top Rated</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <div className="relative z-10">
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-man-cleaning-table_23-2149482291.jpg"
@@ -71,7 +188,7 @@ const Hero = ({ searchQuery, setSearchQuery }: HeroProps) => {
             </div>
             <div className="absolute -top-10 -right-16 w-32 h-32 bg-green-300 rounded-full opacity-20"></div>
             <div className="absolute -bottom-10 -left-12 w-24 h-24 bg-teal-200 rounded-full opacity-20"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

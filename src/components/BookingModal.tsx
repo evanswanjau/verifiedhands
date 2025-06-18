@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,9 +15,26 @@ import { Shield, Clock } from "lucide-react";
 interface BookingModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  selectedService?: string;
+  services: { title: string }[];
 }
 
-const BookingModal = ({ isOpen, onOpenChange }: BookingModalProps) => {
+const BookingModal = ({
+  isOpen,
+  onOpenChange,
+  selectedService,
+  services,
+}: BookingModalProps) => {
+  const [service, setService] = useState("");
+
+  console.log("Selected Service:", selectedService);
+  console.log("Available Services:", services);
+  console.log("Current Service State:", service);
+
+  useEffect(() => {
+    if (selectedService) setService(selectedService);
+  }, [selectedService, isOpen]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-full h-full rounded-none overflow-y-scroll md:h-auto md:min-w-[65%] md:rounded-2xl p-0 border-none">
@@ -63,14 +81,16 @@ const BookingModal = ({ isOpen, onOpenChange }: BookingModalProps) => {
             {/* Service Selection - Full Width */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Service Type</label>
-              <Select>
+              <Select value={service} onValueChange={setService}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a service" />
                 </SelectTrigger>
                 <SelectContent className="w-full">
-                  <SelectItem value="cleaning">House Cleaning</SelectItem>
-                  <SelectItem value="plumbing">Plumbing</SelectItem>
-                  <SelectItem value="electrical">Electrical</SelectItem>
+                  {services.map((s) => (
+                    <SelectItem key={s.title} value={s.title}>
+                      {s.title}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
