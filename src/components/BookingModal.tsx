@@ -27,10 +27,6 @@ const BookingModal = ({
 }: BookingModalProps) => {
   const [service, setService] = useState("");
 
-  console.log("Selected Service:", selectedService);
-  console.log("Available Services:", services);
-  console.log("Current Service State:", service);
-
   useEffect(() => {
     if (selectedService) setService(selectedService);
   }, [selectedService, isOpen]);
