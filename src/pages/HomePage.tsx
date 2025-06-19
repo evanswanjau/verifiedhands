@@ -29,6 +29,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BookingModal from "@/components/BookingModal";
 import services from "@/data/services.json";
+import Footer from "@/components/Footer";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -579,134 +580,7 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">V</span>
-                </div>
-                <span className="text-xl font-bold">VerifiedHands</span>
-              </div>
-              <p className="text-gray-400">
-                Connecting you with trusted professionals for all your service
-                needs.
-              </p>
-              <div className="flex space-x-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-400 hover:text-white p-2"
-                >
-                  <Phone className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-400 hover:text-white p-2"
-                >
-                  <Mail className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Company</h3>
-              <div className="space-y-2">
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  About Us
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Careers
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Press
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Blog
-                </a>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Services</h3>
-              <div className="space-y-2">
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Home Services
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Professional Services
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Business Solutions
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Emergency Services
-                </a>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Support</h3>
-              <div className="space-y-2">
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Help Center
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Contact Us
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Privacy Policy
-                </a>
-                <a
-                  href="#"
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  Terms of Service
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 VerifiedHands. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <BookingModal
         isOpen={isOpen}
