@@ -38,25 +38,5 @@
     "title": "Pressure Washing",
     "description": "Cleaning driveways, decks, siding, and outdoor surfaces.",
     "image": "https://images.pexels.com/photos/5691693/pexels-photo-5691693.jpeg"
-  },
-  {
-    "title": "Event Setup/Takedown",
-    "description": "Help setting up and breaking down parties, weddings, and events.",
-    "image": "https://images.pexels.com/photos/169523/pexels-photo-169523.jpeg"
-  },
-  {
-    "title": "Construction Cleanup",
-    "description": "Post-construction cleaning and jobsite organization.",
-    "image": "https://images.pexels.com/photos/5854195/pexels-photo-5854195.jpeg"
-  },
-  {
-    "title": "Snow Removal",
-    "description": "Shoveling, salting, and clearing walkways and driveways.",
-    "image": "https://images.pexels.com/photos/5409751/pexels-photo-5409751.jpeg"
-  },
-  {
-    "title": "Window Cleaning",
-    "description": "Interior and exterior window washing services.",
-    "image": "https://images.pexels.com/photos/4393916/pexels-photo-4393916.jpeg"
   }
 ]
