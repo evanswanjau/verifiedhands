@@ -41,16 +41,32 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
     setSearchQuery("");
     setInputError(false);
     setShowSuggestions(false);
-    navigate("/", { replace: true }); // resets URL to root without query
+    navigate("/", { replace: true });
   };
 
   return (
-    <section className="relative h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden flex items-center">
+    <section className="relative pt-32 pb-24 lg:h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden flex items-center">
       {/* <div className="absolute inset-0 bg-grid-pattern opacity-5"></div> */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
-            className="space-y-8"
+            className="relative order-1 lg:order-2 hidden lg:block"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="relative z-10">
+              <img
+                src="https://img.freepik.com/free-photo/medium-shot-man-cleaning-table_23-2149482291.jpg"
+                alt="Professional service provider"
+                className="rounded-2xl w-full mx-auto"
+              />
+            </div>
+            <div className="absolute -top-10 -right-16 w-32 h-32 bg-green-300 rounded-full opacity-20"></div>
+            <div className="absolute -bottom-10 -left-12 w-24 h-24 bg-teal-200 rounded-full opacity-20"></div>
+          </motion.div>
+          <motion.div
+            className="space-y-8 order-2 lg:order-1"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
@@ -112,18 +128,18 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                   autoComplete="off"
                 />
                 {searchQuery && (
-                    <button
+                  <button
                     type="button"
                     onClick={handleClear}
                     className="absolute right-3 top-[48%] transform -translate-y-1/2 text-gray-600 hover:text-black font-bold"
                     tabIndex={-1}
                     aria-label="Clear search"
-                    >
+                  >
                     <X className="w-4 h-4 font-bold" />
-                    </button>
+                  </button>
                 )}
                 {inputError && (
-                  <span className="text-red-500 text-xs absolute left-0 top-full mt-1">
+                  <span className="text-red-500 text-xs absolute left-0 top-full">
                     Please select a service before booking.
                   </span>
                 )}
@@ -153,7 +169,7 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
             </motion.div>
 
             <motion.div
-              className="flex items-center space-x-8 text-sm text-gray-600"
+              className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:items-center space-x-8 text-sm text-gray-600"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.7 }}
@@ -171,23 +187,6 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                 <span className="inter-regular">Top Rated</span>
               </div>
             </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="relative z-10">
-              <img
-                src="https://img.freepik.com/free-photo/medium-shot-man-cleaning-table_23-2149482291.jpg"
-                alt="Professional service provider"
-                className="rounded-2xl w-full mx-auto"
-              />
-            </div>
-            <div className="absolute -top-10 -right-16 w-32 h-32 bg-green-300 rounded-full opacity-20"></div>
-            <div className="absolute -bottom-10 -left-12 w-24 h-24 bg-teal-200 rounded-full opacity-20"></div>
           </motion.div>
         </div>
       </div>

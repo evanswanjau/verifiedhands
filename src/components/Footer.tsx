@@ -166,34 +166,6 @@ const Footer = () => {
               </Button>
             </div>
 
-            {/* App Download */}
-            <div className="space-y-3">
-              <h4 className="font-medium text-white">Get Our App</h4>
-              <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  className="bg-gray-800 border-gray-700 text-white hover:bg-gray-700 text-xs px-4 py-2 h-auto"
-                >
-                  <img
-                    src="/google-play.svg"
-                    alt="Google Play"
-                    className="h-5 mr-2"
-                  />
-                  Google Play
-                </Button>
-                <Button
-                  variant="outline"
-                  className="bg-gray-800 border-gray-700 text-white hover:bg-gray-700 text-xs px-4 py-2 h-auto"
-                >
-                  <img
-                    src="/app-store.svg"
-                    alt="App Store"
-                    className="h-5 mr-2"
-                  />
-                  App Store
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
 
