@@ -513,16 +513,18 @@ const HomePage = () => {
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <p className="text-gray-600">
-                      123 Service Street, Nairobi, Kenya
+                      Raphta Road, next to Njema Court, Nairobi, Kenya
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-green-600" />
-                    <p className="text-gray-600">+254 712 345 678</p>
+                    <p className="text-gray-600">0795415340</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-green-600" />
-                    <p className="text-gray-600">contact@verifiedhands.com</p>
+                    <p className="text-gray-600">
+                      verifiedhandskenya@gmail.com
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-green-600" />
