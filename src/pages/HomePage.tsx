@@ -246,8 +246,6 @@ const HomePage = () => {
   if (!company) return null;
   if (!social) return null;
 
-  console.log("About Content:", aboutContent);
-
   return (
     <>
       <Header
