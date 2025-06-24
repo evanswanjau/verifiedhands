@@ -1,10 +1,16 @@
-import { X, Search, Shield, Clock, Star } from "lucide-react";
+import { X, Search, Shield, Clock, Star, BadgeCheck, DollarSign, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
+
+interface Feature {
+  iconName: string;
+  title: string;
+  description: string;
+}
 
 interface HeroProps {
   tagline: string;
@@ -17,7 +23,18 @@ interface HeroProps {
   setSearchQuery: (query: string) => void;
   services: { title: string }[];
   onBook?: (service: string) => void;
+  features: Feature[];
 }
+
+const iconMap: Record<string, JSX.Element> = {
+  Shield: <Shield className="w-5 h-5 text-green-500" />,
+  Clock: <Clock className="w-5 h-5 text-green-500" />,
+  Star: <Star className="w-5 h-5 text-green-500" />,
+  BadgeCheck: <BadgeCheck className="w-5 h-5 text-green-500" />,
+  DollarSign: <DollarSign className="w-5 h-5 text-green-500" />,
+  CreditCard: <CreditCard className="w-5 h-5 text-green-500" />,
+  // Add more as needed
+};
 
 const Hero = ({
   tagline,
@@ -30,6 +47,7 @@ const Hero = ({
   setSearchQuery,
   services,
   onBook,
+  features,
 }: HeroProps) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputError, setInputError] = useState(false);
@@ -189,18 +207,12 @@ const Hero = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.7 }}
             >
-              <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-green-500" />
-                <span className="inter-regular">Verified Professionals</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Clock className="w-5 h-5 text-green-500" />
-                <span className="inter-regular">Quick Response</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Star className="w-5 h-5 text-green-500" />
-                <span className="inter-regular">Top Rated</span>
-              </div>
+              {features.map((feature, idx) => (
+                <div key={idx} className="flex items-center space-x-2">
+                  {iconMap[feature.iconName] || <Shield className="w-5 h-5 text-green-500" />}
+                  <span className="inter-regular">{feature.title}</span>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
         </div>

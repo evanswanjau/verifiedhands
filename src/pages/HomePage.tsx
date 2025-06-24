@@ -1,33 +1,116 @@
-import { useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import {
-  Phone,
-  Mail,
   BadgeCheck,
   DollarSign,
   CreditCard,
-  Clock,
   Handshake,
   ShieldCheck,
   Trophy,
   Users,
   ArrowRight,
   Sparkles,
-  MapPin,
 } from "lucide-react";
 import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BookingModal from "@/components/BookingModal";
-import services from "@/data/services.json";
 import Footer from "@/components/Footer";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
+import ServiceCard from "@/components/ServiceCard";
+import ContactSection from "@/components/ContactSection";
+
+interface Hero {
+  tagline: string;
+  headline: string;
+  subheadline: string;
+  description: string;
+  buttonText: string;
+  imageUrl: string;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  services: { title: string }[];
+  onBook?: (service: string) => void;
+}
+
+interface Content {
+  title: string;
+  badgeText: string;
+  description: string;
+}
+
+interface Service {
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
+interface Contact {
+  badgeText: string;
+  title: string;
+  description: string;
+  address: string;
+  phone: string;
+  email: string;
+  hours: string;
+  mapSrc: string;
+}
+
+interface CTAContent {
+  title: string;
+  description: string;
+}
+
+interface Stat {
+  id?: number;
+  iconName: string;
+  value: string | number;
+  label: string;
+  suffix?: string;
+}
+
+interface Feature {
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+interface AboutContent {
+  badgeText: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  teamCountText: string;
+  teamSubtext: string;
+  promiseTitle: string;
+  promiseDescription: string;
+  differenceTitle: string;
+  differenceDescription: string;
+  communityTitle: string;
+  communityDescription: string;
+}
+
+interface Company {
+  name: string;
+  displayName: string;
+  tagline: string;
+  bio: string;
+  logoUrl: string;
+  address: string;
+  phone: string;
+  email: string;
+}
+
+interface Social {
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  linkedin: string;
+  youtube: string;
+  tiktok: string;
+}
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,6 +118,99 @@ const HomePage = () => {
   const [selectedService, setSelectedService] = useState<string | undefined>(
     undefined
   );
+  const [heroData, setHeroData] = useState<Hero | null>(null);
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialContent, setTestimonialContent] = useState<Content | null>(
+    null
+  );
+  const [services, setServices] = useState<Service[]>([]);
+  const [servicesContent, setServicesContent] = useState<Content | null>(null);
+  const [contactContent, setContactContent] = useState<Contact | null>(null);
+  const [ctaContent, setCtaContent] = useState<CTAContent | null>(null);
+  const [stats, setStats] = useState<Stat[]>([]);
+  const [features, setFeatures] = useState<Feature[]>([]);
+  const [featuresContent, setFeaturesContent] = useState<Content | null>(null);
+  const [aboutContent, setAboutContent] = useState<AboutContent | null>(null);
+  const [company, setCompany] = useState<Company | null>(null);
+  const [social, setSocial] = useState<Social | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/hero")
+      .then((res) => res.json())
+      .then(setHeroData);
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/testimonials")
+      .then((res) => res.json())
+      .then((data) => setTestimonials(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/testimonials")
+      .then((res) => res.json())
+      .then((data) => setTestimonialContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/services")
+      .then((res) => res.json())
+      .then((data) => setServices(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/services")
+      .then((res) => res.json())
+      .then((data) => setServicesContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/contact")
+      .then((res) => res.json())
+      .then((data) => setContactContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/cta")
+      .then((res) => res.json())
+      .then((data) => setCtaContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/stats")
+      .then((res) => res.json())
+      .then((data) => setStats(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/features")
+      .then((res) => res.json())
+      .then((data) => setFeatures(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/features")
+      .then((res) => res.json())
+      .then((data) => setFeaturesContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/about")
+      .then((res) => res.json())
+      .then((data) => setAboutContent(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/company")
+      .then((res) => res.json())
+      .then(setCompany);
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/content/social")
+      .then((res) => res.json())
+      .then(setSocial);
+  }, []);
 
   const handleBook = (service: string) => {
     setSelectedService(service);
@@ -51,105 +227,46 @@ const HomePage = () => {
     }
   };
 
-  const features = [
-    {
-      icon: <BadgeCheck className="h-10 w-10" />,
-      title: "Vetted Professionals",
-      description:
-        "Every service provider undergoes rigorous background checks and skill verification to ensure top-quality work.",
-    },
-    {
-      icon: <DollarSign className="h-10 w-10" />,
-      title: "Price Transparency",
-      description:
-        "No hidden fees or surprises. Get upfront pricing with detailed breakdowns before work begins.",
-    },
-    {
-      icon: <CreditCard className="h-10 w-10" />,
-      title: "Hassle-Free Payments",
-      description:
-        "Secure in-app payments with satisfaction guarantee. Pay only when the work meets your standards.",
-    },
-  ];
+  const iconMap: Record<string, JSX.Element> = {
+    BadgeCheck: <BadgeCheck className="h-10 w-10" />,
+    DollarSign: <DollarSign className="h-10 w-10" />,
+    CreditCard: <CreditCard className="h-10 w-10" />,
+    Trophy: <Trophy className="h-6 w-6" />,
+    Users: <Users className="h-6 w-6" />,
+    ShieldCheck: <ShieldCheck className="h-6 w-6" />,
+    Handshake: <Handshake className="h-6 w-6" />,
+  };
 
-  const stats = [
-    {
-      icon: <Trophy className="h-6 w-6" />,
-      value: 5000,
-      suffix: "+",
-      label: "Completed Projects",
-    },
-    {
-      icon: <Users className="h-6 w-6" />,
-      value: 98,
-      suffix: "%",
-      label: "Customer Satisfaction",
-    },
-    {
-      icon: <ShieldCheck className="h-6 w-6" />,
-      value: 200,
-      suffix: "+",
-      label: "Verified Professionals",
-    },
-    {
-      icon: <Handshake className="h-6 w-6" />,
-      value: "24/7",
-      suffix: "",
-      label: "Support Available",
-    },
-  ];
+  if (!heroData) return null;
+  if (!testimonialContent) return null;
+  if (!servicesContent) return null;
+  if (!contactContent) return null;
+  if (!ctaContent) return null;
+  if (!aboutContent) return null;
+  if (!company) return null;
+  if (!social) return null;
 
-  const testimonials = [
-    {
-      name: "Sarah Nyawira",
-      location: "Kilimani, Nairobi",
-      avatar:
-        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop&crop=face",
-      quote:
-        "VerifiedHands saved me when my AC broke in the middle of summer. Their technician arrived within 2 hours and fixed everything perfectly. The pricing was transparent and fair.",
-      rating: 5,
-      service: "AC Repair",
-    },
-    {
-      name: "John Kamau",
-      location: "Kasarani, Nairobi",
-      avatar:
-        "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=200&h=200&fit=crop&crop=face",
-      quote:
-        "I've used multiple services through VerifiedHands and each experience has been exceptional. The quality of work is consistently high and their customer support is responsive.",
-      rating: 5,
-      service: "Multiple Services",
-    },
-    {
-      name: "Wanjiku Mwangi",
-      location: "Karen, Nairobi",
-      avatar:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face",
-      quote:
-        "As a busy professional, I appreciate how reliable and professional every VerifiedHands provider has been. They show up on time, do great work, and leave my home clean.",
-      rating: 4,
-      service: "Home Maintenance",
-    },
-    {
-      name: "Kevin Otieno",
-      location: "Westlands, Nairobi",
-      avatar:
-        "https://images.unsplash.com/photo-1614890094520-7b8dd0ec56d2?w=200&h=200&fit=crop&crop=face",
-      quote:
-        "I needed urgent plumbing services and VerifiedHands delivered beyond expectations. The plumber was courteous, efficient, and left everything spotless. Highly recommend!",
-      rating: 5,
-      service: "Plumbing",
-    },
-  ];
+  console.log("About Content:", aboutContent);
 
   return (
     <>
-      <Header setIsOpen={setIsOpen} />
+      <Header
+        setIsOpen={setIsOpen}
+        company={company}
+        contact={contactContent}
+      />
       <Hero
+        tagline={heroData.tagline}
+        headline={heroData.headline}
+        description={heroData.description}
+        subheadline={heroData.subheadline}
+        buttonText={heroData.buttonText}
+        imageUrl={heroData.imageUrl}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         services={services}
         onBook={handleBook}
+        features={features.slice(0, 3)} // Pass top 3 features
       />
       <section id="about" className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -157,7 +274,7 @@ const HomePage = () => {
             {/* Left column - Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://img.freepik.com/free-photo/chef-cooking-kitchen-while-wearing-professional-attire_23-2151208270.jpg"
+                src={aboutContent?.imageUrl}
                 alt="VerifiedHands team"
                 className="w-full h-auto object-cover"
               />
@@ -175,8 +292,10 @@ const HomePage = () => {
                     ))}
                   </div>
                   <div className="text-white">
-                    <p className="font-bold">50+ Professionals</p>
-                    <p className="text-sm opacity-90">Trusted community</p>
+                    <p className="font-bold">{aboutContent?.teamCountText}</p>
+                    <p className="text-sm opacity-90">
+                      {aboutContent?.teamSubtext}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -185,18 +304,15 @@ const HomePage = () => {
             {/* Right column - Content */}
             <div>
               <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
-                Our Story
+                {aboutContent?.badgeText}
               </Badge>
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
-                Building Trust in Every Service
+                {aboutContent?.title}
               </h2>
               <div className="w-24 h-1.5 bg-green-500 mb-8"></div>
 
               <p className="text-gray-600 mb-8 leading-relaxed">
-                VerifiedHands began with a simple mission: to create a platform
-                where quality meets reliability in home services. What started
-                as a local operation has grown into a nationwide network of
-                skilled professionals dedicated to excellence.
+                {aboutContent?.description}
               </p>
 
               <div className="space-y-6">
@@ -206,11 +322,10 @@ const HomePage = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800">
-                      Our Promise
+                      {aboutContent?.promiseTitle}
                     </h4>
                     <p className="text-gray-600">
-                      Every professional on our platform is background-checked,
-                      skill-verified, and committed to our quality standards.
+                      {aboutContent?.promiseDescription}
                     </p>
                   </div>
                 </div>
@@ -221,11 +336,10 @@ const HomePage = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800">
-                      The Difference
+                      {aboutContent?.differenceTitle}
                     </h4>
                     <p className="text-gray-600">
-                      We don't just connect you with service providers - we
-                      stand behind every job with our satisfaction guarantee.
+                      {aboutContent?.differenceDescription}
                     </p>
                   </div>
                 </div>
@@ -236,11 +350,10 @@ const HomePage = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800">
-                      Community Focus
+                      {aboutContent?.communityTitle}
                     </h4>
                     <p className="text-gray-600">
-                      We reinvest 5% of all profits into training programs for
-                      underserved communities.
+                      {aboutContent?.communityDescription}
                     </p>
                   </div>
                 </div>
@@ -252,19 +365,19 @@ const HomePage = () => {
           <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div
-                key={index}
+                key={stat.id || index}
                 className="text-center p-6 bg-gray-50 rounded-xl hover:bg-white hover:shadow-lg transition-all"
               >
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 mb-4">
-                  {stat.icon}
+                  {iconMap[stat.iconName] || <Trophy className="h-6 w-6" />}
                 </div>
                 <p className="text-4xl font-bold text-gray-800 mb-2">
-                  {typeof stat.value == "string" ? (
+                  {isNaN(Number(stat.value)) ? (
                     stat.value
                   ) : (
                     <>
                       <CountUp
-                        end={stat.value}
+                        end={Number(stat.value)}
                         duration={2}
                         enableScrollSpy
                         suffix={stat.suffix}
@@ -280,20 +393,21 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section id="why-choose-us" className="py-28 bg-gradient-to-b from-gray-50 to-white">
+      <section
+        id="why-choose-us"
+        className="py-28 bg-gradient-to-b from-gray-50 to-white"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
-              Why Choose Us
+              {featuresContent?.badgeText}
             </Badge>
             <h2 className="text-4xl lg:text-5xl text-gray-800 mb-6">
-              The VerifiedHands Difference
+              {featuresContent?.title}
             </h2>
             <div className="w-24 h-1.5 bg-green-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We go beyond basic services to deliver exceptional experiences
-              through innovation, quality, and customer-centric solutions for
-              every need.
+              {featuresContent?.description}
             </p>
           </div>
 
@@ -307,7 +421,9 @@ const HomePage = () => {
                 <div className="flex flex-col items-center text-center">
                   <div className="mb-6 p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl group-hover:scale-110 transition-transform duration-300">
                     <div className="text-emerald-600 text-3xl">
-                      {feature.icon}
+                      {iconMap[feature.iconName] || (
+                        <Trophy className="h-6 w-6" />
+                      )}
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-800 mb-3">
@@ -324,173 +440,45 @@ const HomePage = () => {
       </section>
 
       {/* Testimonial Section */}
-      <TestimonialCarousel testimonials={testimonials} />
+      <TestimonialCarousel
+        testimonials={testimonials}
+        content={testimonialContent}
+      />
 
       {/* Services Section */}
       <section id="services" className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
-              Our Services
+              {servicesContent.badgeText}
             </Badge>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
-              Services We Offer
+              {servicesContent.title}
             </h2>
             <div className="w-24 h-1.5 bg-green-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Reliable help for all your home and property needs
+              {servicesContent.description}
             </p>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <div
-                key={index}
-                className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-100 overflow-hidden"
-              >
-                <div className="aspect-video bg-gray-100 relative overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                </div>
-              </div>
+              <ServiceCard service={service} key={index} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
-              Get In Touch
-            </Badge>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Contact Us
-            </h2>
-            <div className="w-24 h-1.5 bg-green-500 mx-auto mb-6"></div>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Contact Form Card */}
-            <Card className="p-8 rounded-2xl bg-white shadow-lg border-none">
-              <h3 className="text-2xl font-bold text-gray-800">
-                Send us a message
-              </h3>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Your Name</Label>
-                    <Input id="name" placeholder="John Doe" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                    />
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+254 712 345 678"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="How can we help?" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    rows={4}
-                    placeholder="Your message here..."
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700"
-                >
-                  Send Message
-                </Button>
-              </form>
-            </Card>
-
-            {/* Map & Contact Info */}
-            <div className="relative h-full">
-              {/* Map Container */}
-              <div className="h-full min-h-[400px] bg-gray-200 rounded-2xl overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.814516237187!2d36.82115931575381!3d-1.286385835980925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d664f6d4a1%3A0x9f4d1b41c1b1b1b1!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske"
-                  width="100%"
-                  height="100%"
-                  className="absolute inset-0 rounded-2xl"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                ></iframe>
-              </div>
-
-              {/* Contact Info Card */}
-              <Card className="absolute bottom-6 left-6 right-6 max-w-md p-6 bg-white/95 backdrop-blur-sm">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Contact Information
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <p className="text-gray-600">
-                      Raphta Road, Next to Njema Court
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-green-600" />
-                    <p className="text-gray-600">0795 415 340</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-5 h-5 text-green-600" />
-                    <p className="text-gray-600">
-                      verifiedhandskenya@gmail.com
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-green-600" />
-                    <p className="text-gray-600">Mon-Fri: 8AM - 6PM</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactSection contact={contactContent} />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold">
-              Ready to Get Started?
+              {ctaContent?.title}
             </h2>
-            <p className="opacity-90">
-              Join thousands of satisfied customers who trust VerifiedHands for
-              their service needs. Get matched with verified professionals in
-              minutes.
-            </p>
+            <p className="opacity-90">{ctaContent?.description}</p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {/* WhatsApp Button */}
@@ -524,7 +512,7 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <Footer />
+      <Footer company={company} contact={contactContent} social={social} />
 
       <BookingModal
         isOpen={isOpen}
@@ -534,13 +522,17 @@ const HomePage = () => {
       />
 
       <a
-        href="https://wa.me/254712345678"
+        href={`https://wa.me/${contactContent.phone.replace(/\D/g, "")}`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed z-50 bottom-6 right-6 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full shadow-lg flex items-center justify-center w-14 h-14 md:w-16 md:h-16 transition-colors"
         aria-label="Chat with us on WhatsApp"
       >
-        <svg className="w-6 h-6 md:h-8 md:w-8" fill="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6 md:h-8 md:w-8"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.28.173-1.413-.074-.133-.297-.2-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
       </a>
