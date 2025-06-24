@@ -12,11 +12,21 @@ interface Testimonial {
   avatar: string;
 }
 
-interface TestimonialProps {
-  testimonials: Testimonial[];
+interface TestimonialContent {
+  title: string;
+  badgeText: string;
+  description: string;
 }
 
-const TestimonialCarousel: React.FC<TestimonialProps> = ({ testimonials }) => {
+interface TestimonialProps {
+  testimonials: Testimonial[];
+  content: TestimonialContent;
+}
+
+const TestimonialCarousel: React.FC<TestimonialProps> = ({
+  testimonials,
+  content,
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
@@ -57,15 +67,14 @@ const TestimonialCarousel: React.FC<TestimonialProps> = ({ testimonials }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold mb-2">
-            Customer Stories
+            {content.badgeText}
           </Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
-            Trusted by Thousands of Happy Customers
+            {content.title}
           </h2>
           <div className="w-24 h-1.5 bg-green-500 mx-auto mb-6"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what our customers say about
-            their VerifiedHands experience.
+            {content.description}
           </p>
         </div>
 
