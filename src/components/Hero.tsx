@@ -7,13 +7,30 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface HeroProps {
+  tagline: string;
+  headline: string;
+  subheadline: string;
+  description: string;
+  buttonText: string;
+  imageUrl: string;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   services: { title: string }[];
   onBook?: (service: string) => void;
 }
 
-const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
+const Hero = ({
+  tagline,
+  headline,
+  subheadline,
+  description,
+  buttonText,
+  imageUrl,
+  searchQuery,
+  setSearchQuery,
+  services,
+  onBook,
+}: HeroProps) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputError, setInputError] = useState(false);
 
@@ -57,7 +74,7 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
           >
             <div className="relative z-10">
               <img
-                src="https://img.freepik.com/free-photo/medium-shot-man-cleaning-table_23-2149482291.jpg"
+                src={imageUrl}
                 alt="Professional service provider"
                 className="rounded-2xl w-full mx-auto"
               />
@@ -78,7 +95,7 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
                 <Badge className="bg-green-100 text-green-800 hover:bg-green-100 inter-bold">
-                  Trusted skilled professionals
+                  {tagline}
                 </Badge>
               </motion.div>
               <motion.h1
@@ -87,9 +104,8 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.7 }}
               >
-                Find the perfect
-                <span className="text-green-600 block">professional</span>
-                for any job
+                {headline}
+                <span className="text-green-600 block">{subheadline}</span>
               </motion.h1>
               <motion.p
                 className="text-gray-600 max-w-lg"
@@ -97,8 +113,7 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.7 }}
               >
-                Connect with skilled professionals in your area. From home
-                repairs to personal services, we've got you covered.
+                {description}
               </motion.p>
             </div>
 
@@ -164,7 +179,7 @@ const Hero = ({ searchQuery, setSearchQuery, services, onBook }: HeroProps) => {
                 className="cursor-pointer h-10 bg-green-600 hover:bg-green-700"
                 onClick={handleBookService}
               >
-                Book Service
+                {buttonText}
               </Button>
             </motion.div>
 
