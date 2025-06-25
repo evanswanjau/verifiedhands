@@ -43,7 +43,7 @@ const Footer = ({ company, contact, social }: FooterProps) => {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <a href="/" className="flex items-center">
-                <img src={company.logoUrl} alt="Logo" className="h-16 w-auto" />
+                {/* <img src={company.logoUrl} alt="Logo" className="h-16 w-auto" /> */}
                 <h1 className="text-2xl font-bold text-white ml-2">
                   {company.displayName}
                 </h1>
