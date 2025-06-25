@@ -135,79 +135,79 @@ const HomePage = () => {
   const [social, setSocial] = useState<Social | null>(null);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/hero`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/hero`)
       .then((res) => res.json())
       .then(setHeroData);
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}testimonials`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/testimonials`)
       .then((res) => res.json())
       .then((data) => setTestimonials(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/testimonials`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/testimonials`)
       .then((res) => res.json())
       .then((data) => setTestimonialContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}services`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/services`)
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/services`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/services`)
       .then((res) => res.json())
       .then((data) => setServicesContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/contact`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/contact`)
       .then((res) => res.json())
       .then((data) => setContactContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/cta`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/cta`)
       .then((res) => res.json())
       .then((data) => setCtaContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}stats`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/stats`)
       .then((res) => res.json())
       .then((data) => setStats(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}features`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/features`)
       .then((res) => res.json())
       .then((data) => setFeatures(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/features`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/features`)
       .then((res) => res.json())
       .then((data) => setFeaturesContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/about`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/about`)
       .then((res) => res.json())
       .then((data) => setAboutContent(data));
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/company`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/company`)
       .then((res) => res.json())
       .then(setCompany);
   }, []);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}content/social`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/content/social`)
       .then((res) => res.json())
       .then(setSocial);
   }, []);
