@@ -14,7 +14,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => (
   <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-100 overflow-hidden">
     <div className="aspect-video bg-gray-100 relative overflow-hidden">
       <img
-        src={service.imageUrl}
+        src={import.meta.env.VITE_BASE_URL+service.imageUrl}
         alt={service.title}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
       />

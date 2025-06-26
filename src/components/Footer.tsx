@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 interface FooterProps {
   company: {
     name: string;
-    logoUrl: string;
+    imageUrl: string;
     displayName: string;
     bio: string;
   };

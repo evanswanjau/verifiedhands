@@ -97,7 +97,7 @@ interface Company {
   displayName: string;
   tagline: string;
   bio: string;
-  logoUrl: string;
+  imageUrl: string;
   address: string;
   phone: string;
   email: string;
@@ -272,7 +272,7 @@ const HomePage = () => {
             {/* Left column - Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src={aboutContent?.imageUrl}
+                src={import.meta.env.VITE_BASE_URL + aboutContent.imageUrl}
                 alt="VerifiedHands team"
                 className="w-full h-auto object-cover"
               />
@@ -482,7 +482,7 @@ const HomePage = () => {
               {/* WhatsApp Button */}
               <Button
                 onClick={() =>
-                  window.open("https://wa.me/+254795415340", "_blank")
+                  window.open(contactContent.phone.replace(/\D/g, ""), "_blank")
                 }
                 className="cursor-pointer w-48 sm:w-auto !p-6 !md:p-5 bg-[#25D366] hover:bg-white text-white hover:text-[#25D366] gap-2 transition-colors duration-300"
               >
@@ -517,6 +517,7 @@ const HomePage = () => {
         onOpenChange={handleModalOpenChange}
         selectedService={selectedService}
         services={services}
+        whatsappNumber={contactContent?.phone}
       />
 
       <a

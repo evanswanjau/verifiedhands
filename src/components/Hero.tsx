@@ -1,4 +1,13 @@
-import { X, Search, Shield, Clock, Star, BadgeCheck, DollarSign, CreditCard } from "lucide-react";
+import {
+  X,
+  Search,
+  Shield,
+  Clock,
+  Star,
+  BadgeCheck,
+  DollarSign,
+  CreditCard,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +101,7 @@ const Hero = ({
           >
             <div className="relative z-10">
               <img
-                src={imageUrl}
+                src={import.meta.env.VITE_BASE_URL + imageUrl}
                 alt="Professional service provider"
                 className="rounded-2xl w-full mx-auto"
               />
@@ -209,7 +218,9 @@ const Hero = ({
             >
               {features.map((feature, idx) => (
                 <div key={idx} className="flex items-center space-x-2">
-                  {iconMap[feature.iconName] || <Shield className="w-5 h-5 text-green-500" />}
+                  {iconMap[feature.iconName] || (
+                    <Shield className="w-5 h-5 text-green-500" />
+                  )}
                   <span className="inter-regular">{feature.title}</span>
                 </div>
               ))}

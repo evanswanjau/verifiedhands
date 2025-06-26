@@ -17,7 +17,7 @@ interface BookingModalProps {
   onOpenChange: (open: boolean) => void;
   selectedService?: string;
   services: { title: string }[];
-  whatsappNumber?: string; // Optional WhatsApp number prop
+  whatsappNumber: string;
 }
 
 const BookingModal = ({
@@ -25,7 +25,7 @@ const BookingModal = ({
   onOpenChange,
   selectedService,
   services,
-  whatsappNumber = "254707837313", // Default number - replace with your actual WhatsApp number
+  whatsappNumber,
 }: BookingModalProps) => {
   const [service, setService] = useState("");
   const [firstName, setFirstName] = useState("");

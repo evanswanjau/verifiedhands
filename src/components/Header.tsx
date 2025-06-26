@@ -11,7 +11,7 @@ const navigation = [
 
 type HeaderProps = {
   setIsOpen: (isOpen: boolean) => void;
-  company: { logoUrl: string; displayName: string };
+  company: { imageUrl: string; displayName: string };
   contact: { phone: string };
 };
 
@@ -38,7 +38,11 @@ const Header = ({ setIsOpen, company, contact }: HeaderProps) => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
             <a href="/" className="flex items-center">
-              <img src={company.logoUrl} alt="Logo" className="h-auto w-52" />
+              <img
+                src={import.meta.env.VITE_BASE_URL + company.imageUrl}
+                alt="Logo"
+                className="h-auto w-52"
+              />
               {/* <h1 className="text-2xl font-bold text-green-600 ml-2">
                 {company.displayName}
               </h1> */}
