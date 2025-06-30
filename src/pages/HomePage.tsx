@@ -482,7 +482,12 @@ const HomePage = () => {
               {/* WhatsApp Button */}
               <Button
                 onClick={() =>
-                  window.open(contactContent.phone.replace(/\D/g, ""), "_blank")
+                  window.open(
+                    `https://wa.me/${contactContent.phone
+                      .replace(/\D/g, "")
+                      .replace(/^0/, "254")}`,
+                    "_blank"
+                  )
                 }
                 className="cursor-pointer w-48 sm:w-auto !p-6 !md:p-5 bg-[#25D366] hover:bg-white text-white hover:text-[#25D366] gap-2 transition-colors duration-300"
               >
@@ -517,11 +522,12 @@ const HomePage = () => {
         onOpenChange={handleModalOpenChange}
         selectedService={selectedService}
         services={services}
-        whatsappNumber={contactContent?.phone}
       />
 
       <a
-        href={`https://wa.me/${contactContent.phone.replace(/\D/g, "")}`}
+        href={`https://wa.me/${contactContent.phone
+          .replace(/\D/g, "")
+          .replace(/^0/, "254")}`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed z-50 bottom-6 right-6 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full shadow-lg flex items-center justify-center w-14 h-14 md:w-16 md:h-16 transition-colors"

@@ -71,7 +71,10 @@ const Header = ({ setIsOpen, company, contact }: HeaderProps) => {
             <Button
               onClick={() =>
                 window.open(
-                  `https://wa.me/${contact.phone.replace(/\D/g, "")}`,
+                  `https://wa.me/${contact.phone
+                    .replace(/\D/g, "")
+                    .replace(/^0/, "254")}`,
+
                   "_blank"
                 )
               }
@@ -117,7 +120,13 @@ const Header = ({ setIsOpen, company, contact }: HeaderProps) => {
               </Button>
               <Button
                 onClick={() =>
-                  window.open("https://wa.me/254795415340", "_blank")
+                  window.open(
+                    `https://wa.me/${contact.phone
+                      .replace(/\D/g, "")
+                      .replace(/^0/, "254")}`,
+
+                    "_blank"
+                  )
                 }
                 className="cursor-pointer shadow-sm bg-[#25D366] hover:bg-white text-white hover:text-[#25D366] gap-2 transition-colors duration-300"
               >
