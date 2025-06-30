@@ -11,13 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Shield, Clock } from "lucide-react";
+import { toast } from "sonner";
 
 interface BookingModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   selectedService?: string;
   services: { title: string }[];
-  whatsappNumber: string;
 }
 
 const BookingModal = ({
@@ -25,7 +25,6 @@ const BookingModal = ({
   onOpenChange,
   selectedService,
   services,
-  whatsappNumber,
 }: BookingModalProps) => {
   const [service, setService] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -35,13 +34,13 @@ const BookingModal = ({
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (selectedService) setService(selectedService);
   }, [selectedService, isOpen]);
 
-  const handleSubmit = () => {
-    // Basic validation
+  const handleSubmit = async () => {
     if (
       !firstName ||
       !lastName ||
@@ -52,46 +51,44 @@ const BookingModal = ({
       !description ||
       !preferredDate
     ) {
-      alert("Please fill in all required fields");
+      toast.error("Please fill in all required fields");
       return;
     }
-
-    // Create the WhatsApp message
-    const message = `*New Service Booking Request*
-
-*Name:* ${firstName} ${lastName}
-*Phone:* ${phone}
-*Email:* ${email}
-*Service:* ${service}
-*Location:* ${location}
-*Preferred Date:* ${preferredDate}
-
-*Description:*
-${description}
-
-Please confirm this booking request. Thank you!`;
-
-    // Encode the message for URL
-    const encodedMessage = encodeURIComponent(message);
-
-    // Create WhatsApp URL
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-    // Open WhatsApp in a new tab
-    window.open(whatsappUrl, "_blank");
-
-    // Close the modal
-    onOpenChange(false);
-
-    // Reset form (optional)
-    setFirstName("");
-    setLastName("");
-    setPhone("");
-    setEmail("");
-    setLocation("");
-    setDescription("");
-    setPreferredDate("");
-    setService("");
+    setLoading(true);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/booking`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          phone,
+          email,
+          service,
+          location,
+          description,
+          preferredDate,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to send booking");
+      toast.success("Your booking request has been sent successfully!");
+      setFirstName("");
+      setLastName("");
+      setPhone("");
+      setEmail("");
+      setLocation("");
+      setDescription("");
+      setPreferredDate("");
+      setService("");
+      onOpenChange(false);
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        "There was an error sending your booking. Please try again later."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -210,8 +207,9 @@ Please confirm this booking request. Thank you!`;
             <Button
               onClick={handleSubmit}
               className="w-full bg-green-600 hover:bg-green-700"
+              disabled={loading}
             >
-              Send to WhatsApp
+              {loading ? "Sending..." : "Book Now"}
             </Button>
           </div>
 
