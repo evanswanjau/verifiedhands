@@ -44,7 +44,7 @@ const Footer = ({ company, contact, social }: FooterProps) => {
             <div className="flex items-center space-x-2">
               <a href="/" className="flex items-center">
                 {/* <img src={company.logoUrl} alt="Logo" className="h-16 w-auto" /> */}
-                <h1 className="text-2xl font-bold text-white ml-2">
+                <h1 className="text-2xl font-bold text-white">
                   {company.displayName}
                 </h1>
               </a>
@@ -85,12 +85,12 @@ const Footer = ({ company, contact, social }: FooterProps) => {
                 </a>
               </div>
               <div className="space-y-3">
-                <a
+                {/* <a
                   href="#"
                   className="block text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Join Us
-                </a>
+                </a> */}
                 <a
                   href="#testimonials"
                   className="block text-gray-400 hover:text-white transition-colors text-sm"
@@ -115,7 +115,7 @@ const Footer = ({ company, contact, social }: FooterProps) => {
                 <MapPin className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                 <p className="text-gray-400 text-sm">{contact.address}</p>
               </div>
-                <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-green-500" />
                 <a
                   href={`tel:${contact.phone.replace(/[^0-9]/g, "")}`}
@@ -123,8 +123,8 @@ const Footer = ({ company, contact, social }: FooterProps) => {
                 >
                   {contact.phone}
                 </a>
-                </div>
-                <div className="flex items-center gap-3">
+              </div>
+              <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-green-500" />
                 <a
                   href={`mailto:${contact.email}`}
@@ -132,7 +132,7 @@ const Footer = ({ company, contact, social }: FooterProps) => {
                 >
                   {contact.email}
                 </a>
-                </div>
+              </div>
               <div className="flex items-center gap-3">
                 <Clock className="w-5 h-5 text-green-500" />
                 <p className="text-gray-400 text-sm">{contact.hours}</p>
