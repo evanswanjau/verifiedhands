@@ -4,4 +4,4 @@ deployment:
     - /opt/cpanel/ea-nodejs20/bin/npm install
     - /opt/cpanel/ea-nodejs20/bin/npm run build
     - rm -rf /home/zcygjrrx/public_html/*
-    - cp -r build/* /home/zcygjrrx/public_html/
+    - cp -r dist/* /home/zcygjrrx/public_html/
