@@ -135,7 +135,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
                 <Textarea
                   id="message"
                   rows={4}
-                  placeholder="Your message here..."
+                  placeholder="Write your message here..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
