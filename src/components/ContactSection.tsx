@@ -113,7 +113,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact }) => {
                   <Input
                     id="phone"
                     type="tel"
-                    placeholder="+254 712 345 678"
+                    placeholder="+254 700 123 456"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
