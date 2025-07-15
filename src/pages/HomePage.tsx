@@ -237,6 +237,12 @@ const HomePage = () => {
     social,
   ]);
 
+  useEffect(() => {
+    document.title = company
+      ? `${company.displayName} – ${company.tagline}`
+      : "iVerified";
+  }, [company]);
+
   const handleBook = (service: string) => {
     setSelectedService(service);
     setIsOpen(true);

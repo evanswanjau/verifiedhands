@@ -41,7 +41,7 @@ const Header = ({ setIsOpen, company, contact }: HeaderProps) => {
               <img
                 src={import.meta.env.VITE_BASE_URL + company.imageUrl}
                 alt="Logo"
-                className="h-auto w-52"
+                className="h-12 w-auto"
               />
               {/* <h1 className="text-2xl font-bold text-green-600 ml-2">
                 {company.displayName}
